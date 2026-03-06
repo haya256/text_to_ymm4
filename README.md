@@ -12,7 +12,7 @@
 
 ## 使い方
 
-1. `input.txt` に変換したいテキストを保存する（UTF-8）
+1. `data/input.txt` に変換したいテキストを保存する（UTF-8）
 
 2. スクリプトを実行する
 
@@ -20,11 +20,11 @@
    python text_to_ymm4.py
    ```
 
-3. `script.csv` が生成される
+3. `data/script.csv` が生成される
 
 4. YMM4で読み込む
    - 「ツール」→「台本編集」→「台本ファイルを開く」
-   - `script.csv` を選択
+   - `data/script.csv` を選択
    - 「タイムラインに追加」をクリック
 
 ## 設定
@@ -33,8 +33,8 @@
 
 | 定数 | デフォルト値 | 説明 |
 |------|------------|------|
-| `INPUT_FILE` | `input.txt` | 入力テキストファイルのパス |
-| `OUTPUT_FILE` | `script.csv` | 出力CSVファイルのパス |
+| `INPUT_FILE` | `data/input.txt` | 入力テキストファイルのパス |
+| `OUTPUT_FILE` | `data/script.csv` | 出力CSVファイルのパス |
 | `CHARACTER_NAME` | `CHARACTER_NAME` | YMM4に登録済みのキャラクター名 |
 | `MAX_CHARS` | `40` | 1セリフの最大文字数 |
 

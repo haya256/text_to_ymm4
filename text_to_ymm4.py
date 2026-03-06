@@ -9,12 +9,13 @@
   4. YMM4の「ツール」→「台本編集」→「台本ファイルを開く」で読み込む
 """
 
+import os
 import re
 import sys
 
 # 設定
-INPUT_FILE = "input.txt"
-OUTPUT_FILE = "script.csv"
+INPUT_FILE = "data/input.txt"
+OUTPUT_FILE = "data/script.csv"
 CHARACTER_NAME = "CHARACTER_NAME"  # YMM4に登録済みのキャラクター名に変更してください
 MAX_CHARS = 40  # 1セリフの最大文字数（長すぎると読み上げが不自然になる）
 
@@ -75,6 +76,7 @@ def convert_to_ymm4_script(input_path, output_path, character):
         print("エラー: テキストが空か、分割できませんでした。")
         sys.exit(1)
 
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         for sentence in sentences:
             # YMM4台本形式: キャラ名[TAB]セリフ
