@@ -9,6 +9,7 @@
   4. YMM4の「ツール」→「台本編集」→「台本ファイルを開く」で読み込む
 """
 
+import csv
 import os
 import re
 import sys
@@ -32,18 +33,19 @@ def split_text(text):
         if not line:
             continue
 
-        # 句点・感嘆符・疑問符で分割
-        parts = re.split(r'(?<=[。！？])', line)
+        # 句点・感嘆符・疑問符で分割（日本語・英語）
+        parts = re.split(r'(?<=[。！？.!?])', line)
 
         for part in parts:
+            part = re.sub(r'"',"かっこ",part)
             part = part.strip()
             if not part:
                 continue
 
             # 長すぎる場合はさらに分割（読点や接続詞で）
             if len(part) > MAX_CHARS:
-                # 読点で分割を試みる
-                sub_parts = re.split(r'(?<=[、])', part)
+                # 読点・英語カンマで分割を試みる
+                sub_parts = re.split(r'(?<=[、,])', part)
                 current = ""
                 for sub in sub_parts:
                     if len(current) + len(sub) <= MAX_CHARS:
@@ -77,10 +79,11 @@ def convert_to_ymm4_script(input_path, output_path, character):
         sys.exit(1)
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
+    with open(output_path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.writer(f)
         for sentence in sentences:
-            # YMM4台本形式: キャラ名[TAB]セリフ
-            f.write(f"{character},{sentence}\n")
+            # YMM4台本形式: キャラ名,セリフ
+            writer.writerow([character, sentence])
 
     print(f"完了！ {len(sentences)} 件のセリフを生成しました。")
     print(f"出力ファイル: {output_path}")
